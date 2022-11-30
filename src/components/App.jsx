@@ -3,6 +3,7 @@ import { nanoid } from 'nanoid';
 import { Section } from './Section/Section';
 import { Contacts } from './Contacts/Contacts';
 import { Filter } from './Filter/Filter';
+import { Notification } from './Notification/Notification';
 import Form from './Form/Form';
 
 class App extends Component {
@@ -73,14 +74,21 @@ class App extends Component {
           <Form onSubmit={this.formSubmitHandler} />
         </Section>
         <Section title="Contacts">
-          <Filter value={this.state.filter} onChange={this.changeFilter} />
-          <Contacts
-            contacts={filtered}
-            deleteContact={this.deleteContact}
-            renameContact={this.renameContact}
-            userUpdate={this.state.userUpdate}
-            onSubmit={this.updateName}
-          />
+          {this.state.contacts.length ? (
+            <>
+              <Filter value={this.state.filter} onChange={this.changeFilter} />
+
+              <Contacts
+                contacts={filtered}
+                deleteContact={this.deleteContact}
+                renameContact={this.renameContact}
+                userUpdate={this.state.userUpdate}
+                onSubmit={this.updateName}
+              />
+            </>
+          ) : (
+            <Notification message="There are no entries in the phone book" />
+          )}
         </Section>
       </>
     );
